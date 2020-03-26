@@ -11,6 +11,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
+import io.netty.handler.stream.ChunkedWriteHandler;
 
 public class HTTPServer {
     public void run() throws Exception {
@@ -25,6 +26,7 @@ public class HTTPServer {
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             socketChannel.pipeline().addLast(new HttpResponseEncoder()); //响应编码
                             socketChannel.pipeline().addLast(new HttpRequestDecoder()); //响应解码
+                            //socketChannel.pipeline().addLast(new ChunkedWriteHandler());//图片传输处理器
                             socketChannel.pipeline().addLast(new HttpServerHandler());
                         }
                     })
